@@ -3,17 +3,20 @@ const cors = require('cors')
 const app = express()
 const PORT = process.env.PORT || 8080
 const config = require('./config')
+const { json } = require('express');
+const firebase = require('firebase');
+const mongoose = require('mongoose');
 
-app.use(express.json())
+app.use(json())
 app.use(cors())
 
-const articlesRoute= require('./routes/articles')
+/* const articlesRoute= require('./routes/articles') */
 const usersRoute= require('./routes/users')
-const authRoute= require('./routes/auth')
+/* const authRoute= require('./routes/auth') */
 
-app.use(articlesRoute)
+/* app.use(articlesRoute) */
 app.use(usersRoute)
-app.use(authRoute)
+/* app.use(authRoute) */
 
 firebase.initializeApp(config.firebaseConfig)
 

@@ -1,3 +1,9 @@
+let envs = {}
+if(process.env.NODE_ENV !=="production"){
+	const dotenv = require("dotenv");
+	const result = dotenv.config();
+	envs = result.parsed
+}
 
   const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY || envs.FIREBASE_API_KEY,
