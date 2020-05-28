@@ -8,7 +8,7 @@ const bearerToken = require("express-bearer-token");
 
 router
   .route("/users")
-  .get(mustAuth(), async (req, res) => {
+  .get( async (req, res) => {
     let searchId= req.params.id
     if (req.user.profile !== 'admin' && searchId !== req.user.id) {
       res.status(403).json({ 'message': 'Permisos insuficientes' })
@@ -45,7 +45,7 @@ router
     }
   })
   router.route("/users/:id")
-  .get( mustAuth(), async(req,res)=>{
+  .get(  async(req,res)=>{
     let searchId= req.params.id
 
     if (req.user.profile !== 'admin' && searchId !== req.user.id) {
@@ -63,7 +63,7 @@ router
 
     res.json(foundUser)
   })
-  .put(mustAuth(), async (req,res)=>{
+  .put( async (req,res)=>{
     let searchId= req.params.id
     let filters = {uid: searchId}
     if(req.user.profile !== 'admin'&& searchId !== req.user.id){
@@ -80,7 +80,7 @@ router
 
     res.json(foundUser)
   })
-  .delete(mustAuth(), async (req, res) => {
+  .delete( async (req, res) => {
 
     let searchId = req.params.id
 

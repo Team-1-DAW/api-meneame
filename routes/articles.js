@@ -15,7 +15,7 @@ router.route('/articles')
   return
 }
 })
-.post(mustAuth(),async(req,res)=>{
+.post(async(req,res)=>{
   let newItem = await new Articles(req.body).save()
   res.status(201).json(newItem)
 })
@@ -33,7 +33,7 @@ router.route('/articles/:id')
 
     res.json(foundItem)
   })
-  .put( mustAuth(),async (req, res) => {
+  .put( async (req, res) => {
 
     let searchId = req.params.id
 
@@ -46,7 +46,7 @@ router.route('/articles/:id')
 
     res.json(updatedItem)
   })
-  .delete( mustAuth(),async (req, res) => {
+  .delete( async (req, res) => {
 
     let searchId = req.params.id
 
