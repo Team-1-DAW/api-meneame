@@ -6,7 +6,7 @@ const articleSchema = new Schema({
   resume: {type:String, require:true},
   category: {type: String, require:true},
   url: {type: String, require:true},
-  img: {type: String, require:true},
+  img: {type: String, require:false},
   date: {type: Date,  default: Date.now},
   vote: [{
     positive: {type:Number, require:false},
@@ -22,4 +22,4 @@ const articleSchema = new Schema({
 })
 
 
-module.exports = userSchema
+module.exports = articleSchema

@@ -8,14 +8,8 @@ router
   .route("/users")
   .get(async (req, res) => {
     let itemList = await User.find().exec();
-    let filteredList = itemList.map((item) => {
-      let clonedItem = { ...item.toJSON() };
-
-      delete clonedItem.password;
-
-      return clonedItem;
-    });
-    res.json(filteredList);
+     
+    res.json(itemList);
   })
   .post(async (req, res) => {
     try {
@@ -47,10 +41,10 @@ router
   .get(async(req,res)=>{
     let searchId= req.params.id
 
-    if (req.user.profile !== 'admin' && searchId !== req.user.id) {
+    /* if (req.user.profile !== 'admin' && searchId !== req.user.id) {
       res.status(403).json({ 'message': 'Permisos insuficientes' })
       return
-    }
+    } */
 
     let foundItem = await User.findById(searchId).exec()    
     if (!foundItem) {
