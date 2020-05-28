@@ -30,7 +30,7 @@ router
       res.status(201).json(createdItem);
 
     } catch (err) {
-      return res.status(200).send({
+      return res.status(404).send({
         status: "error",
         message: "esto no funciona ⛈",
         message: err,
@@ -73,5 +73,24 @@ router
 
     res.json(foundUser)
   })
+  /* .delete( async (req, res) => {
+
+    let searchId = req.params.id
+
+    user.reauthenticateWithCredential(credential).then(function() {
+      // User re-authenticated.
+    }).catch(function(error) {
+      // An error happened.
+    });
+
+    let foundItem = await Articles.findOneAndDelete({_id: searchId}).exec()
+
+    if (!foundItem) {
+      res.status(404).json({ 'message': 'El elemento que intentas eliminar no existe' })
+      return
+    }
+
+    res.status(204).json()
+  }) */
 
 module.exports = router;
