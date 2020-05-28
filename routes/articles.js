@@ -3,6 +3,7 @@
 const express = require('express')
 const router = express.Router()
 const Articles = require('../models/articles')
+const mustAuth = require("./middlewares/mustAuth");
 
 router.route('/articles')
 .get(async(req,res)=>{
@@ -14,7 +15,7 @@ router.route('/articles')
   return
 }
 })
-.post(async(req,res)=>{
+.post(mustAuth(),async(req,res)=>{
   let newItem = await new Articles(req.body).save()
   res.status(201).json(newItem)
 })
@@ -32,7 +33,7 @@ router.route('/articles/:id')
 
     res.json(foundItem)
   })
-  .put( async (req, res) => {
+  .put( mustAuth(),async (req, res) => {
 
     let searchId = req.params.id
 
@@ -45,7 +46,7 @@ router.route('/articles/:id')
 
     res.json(updatedItem)
   })
-  .delete( async (req, res) => {
+  .delete( mustAuth(),async (req, res) => {
 
     let searchId = req.params.id
 
