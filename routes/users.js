@@ -3,10 +3,17 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
 const firebase = require("firebase");
+const mustAuth = require("./middlewares/mustAuth");
+const bearerToken = require("express-bearer-token");
 
 router
   .route("/users")
-  .get(async (req, res) => {
+  .get(mustAuth, async (req, res) => {
+    let searchId= req.params.id
+    if (req.user.profile !== 'admin' && searchId !== req.user.id) {
+      res.status(403).json({ 'message': 'Permisos insuficientes' })
+      return
+    }
     let itemList = await User.find().exec();
      
     res.json(itemList);
@@ -38,13 +45,13 @@ router
     }
   })
   router.route("/users/:id")
-  .get(async(req,res)=>{
+  .get( mustAuth, async(req,res)=>{
     let searchId= req.params.id
 
-    /* if (req.user.profile !== 'admin' && searchId !== req.user.id) {
+    if (req.user.profile !== 'admin' && searchId !== req.user.id) {
       res.status(403).json({ 'message': 'Permisos insuficientes' })
       return
-    } */
+    }
 
     let foundItem = await User.findById(searchId).exec()    
     if (!foundItem) {
@@ -56,7 +63,7 @@ router
 
     res.json(foundUser)
   })
-  .put(async (req,res)=>{
+  .put(mustAuth, async (req,res)=>{
     let searchId= req.params.id
     let filters = {uid: searchId}
     if(req.user.profile !== 'admin'&& searchId !== req.user.id){
@@ -73,16 +80,21 @@ router
 
     res.json(foundUser)
   })
-  /* .delete( async (req, res) => {
+  .delete(mustAuth, async (req, res) => {
 
     let searchId = req.params.id
 
-    user.reauthenticateWithCredential(credential).then(function() {
-      // User re-authenticated.
-    }).catch(function(error) {
-      // An error happened.
-    });
+    if(req.user.profile !== 'admin'&& searchId !== req.user.id){
+      res.status(403).json({ 'message': 'Permisos insuficientes' })
+      return
+    }
+    let user = firebase.auth().currentUser;
 
+    user.delete().then(function() {
+      user
+    }).catch(function(error) {
+      res.status(403).json({ 'message': 'No ha sido posible borrar su usuario' })
+    });
     let foundItem = await Articles.findOneAndDelete({_id: searchId}).exec()
 
     if (!foundItem) {
@@ -91,6 +103,6 @@ router
     }
 
     res.status(204).json()
-  }) */
+  })
 
 module.exports = router;
