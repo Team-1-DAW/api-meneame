@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
 const firebase = require("firebase");
-const mustAuth = require("./middlewares/mustAuth");
 const bearerToken = require("express-bearer-token");
 
 router

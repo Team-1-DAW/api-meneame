@@ -3,7 +3,6 @@
 const express = require('express')
 const router = express.Router()
 const Articles = require('../models/articles')
-const mustAuth = require("./middlewares/mustAuth");
 
 router.route('/articles')
 .get(async(req,res)=>{
