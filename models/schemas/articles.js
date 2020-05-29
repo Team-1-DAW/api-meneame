@@ -9,8 +9,8 @@ const articleSchema = new Schema({
   img: {type: String, require:false},
   date: {type: Date,  default: Date.now},
   vote: [{
-    positive: {type:Number, require:false},
-    negative: {type:Number, require:false}
+    positive: {type:Number, default: 0},
+    negative: {type:Number, default: 0}
   }],
   comments:[{
   content: {type: String, require:true},
