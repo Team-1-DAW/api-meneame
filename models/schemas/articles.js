@@ -8,17 +8,17 @@ const articleSchema = new Schema({
   url: {type: String, require:true},
   img: {type: String, require:false},
   date: {type: Date,  default: Date.now},
-  vote: [{
+  vote: {
     positive: {type:Number, default: 0},
     negative: {type:Number, default: 0}
-  }],
-  comments:[{
+  },
+  comments:{
   content: {type: String, require:true},
   date: {type: Date,  default: Date.now},
   user: {
     id: {type:String, require:false}
   }
-  }]
+  }
 })
 
 
