@@ -14,10 +14,18 @@ router.route('/articles')
   return
 }
 })
-.post(async(req,res)=>{
+.post( async(req,res)=>{
   let newItem = await new Articles(req.body).save()
   res.status(201).json(newItem)
 })
+
+// [POST] /article/:id/vote
+// Info que mandamos :  {type: "positive" } o {type: "negative" }
+// Elmétodo hace una búsqueda: Articles.findById(id)
+// Si type es positive suma un voto y si es negativo lo resta
+// articles_votes => Schema con articleId, ip_usuario, id_usuario
+
+
 router.route('/articles/:id')
   .get(async (req, res) => {
 
